@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Task.Infrastructure.Specifications
+namespace Task.Core.Specification
 {
     public class BaseSpecification<T> : ISpecification<T> where T : class
     {
@@ -38,6 +38,27 @@ namespace Task.Infrastructure.Specifications
             IsPaginationEnabled = true;
             Skip = skip;
             Take = take;
+        }
+
+        public void AddSorting(int sortOrder, Expression<Func<T, object>> OrderBy)
+        {
+            if (sortOrder == 1) this.OrderBy = OrderBy;
+            else OrderByDescending = OrderBy;
+        }
+
+        public void AddSorting(int sortOrder, string sortColumn)
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var property = Expression.Property(parameter, sortColumn);
+
+            // Create a lambda expression (e.g., x => x.Property)
+            var lambda = Expression.Lambda<Func<T, object>>(
+                Expression.Convert(property, typeof(object)), parameter);
+
+            if (sortOrder == 1)
+                OrderBy = lambda;
+            else
+                OrderByDescending = lambda;
         }
     }
 }

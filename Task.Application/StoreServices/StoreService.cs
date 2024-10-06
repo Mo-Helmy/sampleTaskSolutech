@@ -6,7 +6,7 @@ using Task.Application.StoreServices.Dto;
 using Task.Core.Base;
 using Task.Core.Exceptions;
 using Task.Core.Extensions;
-using Task.Core.Interfaces.Specification;
+using Task.Core.Specification;
 using Task.Domain.Entities;
 using Task.Infrastructure.Data;
 

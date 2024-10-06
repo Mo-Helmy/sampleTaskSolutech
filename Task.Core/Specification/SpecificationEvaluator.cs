@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Task.Infrastructure.Specifications
+namespace Task.Core.Specification
 {
     public static class SpecificationEvaluator<TEntity> where TEntity : class
     {

@@ -1,5 +1,5 @@
 ﻿using Task.Application.StoreServices.Dto;
-using Task.Core.Interfaces.Specification;
+using Task.Core.Specification;
 using Task.Domain.Entities;
 
 namespace Task.Application.Specifications;

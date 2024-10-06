@@ -45,7 +45,8 @@ namespace Task.Infrastructure.Migrations
                         name: "FK_StoreSpaces_Stores_StoreId",
                         column: x => x.StoreId,
                         principalTable: "Stores",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +65,8 @@ namespace Task.Infrastructure.Migrations
                         name: "FK_Products_StoreSpaces_StoreSpaceId",
                         column: x => x.StoreSpaceId,
                         principalTable: "StoreSpaces",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.InsertData(

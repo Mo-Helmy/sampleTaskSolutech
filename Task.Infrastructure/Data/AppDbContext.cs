@@ -6,7 +6,7 @@ namespace Task.Infrastructure.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<Store> Stores { get; set; }
-    public DbSet<StoreSpace> spaces { get; set; }
+    public DbSet<StoreSpace> Spaces { get; set; }
     public DbSet<Product> Products { get; set; }
 
 
@@ -34,7 +34,7 @@ public class AppDbContext : DbContext
             entity.HasMany(x => x.Spaces)
             .WithOne(x => x.Store)
             .HasForeignKey(x => x.StoreId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<StoreSpace>(entity =>
@@ -44,15 +44,15 @@ public class AppDbContext : DbContext
             entity.HasOne(x => x.Store)
             .WithMany(x => x.Spaces)
             .HasForeignKey(x => x.StoreId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasData(
                 new List<StoreSpace>()
                 {
-                    new StoreSpace() { Id = 1, Name = "Default", IsDefault = true, StoreId = 1},
-                    new StoreSpace() { Id = 2, Name = "Default", IsDefault = true, StoreId = 2},
-                    new StoreSpace() { Id = 3, Name = "Default", IsDefault = true, StoreId = 3},
-                    new StoreSpace() { Id = 4, Name = "Default", IsDefault = true, StoreId = 4},
+                    new StoreSpace() { Id = 1, Name = "Default", StoreId = 1},
+                    new StoreSpace() { Id = 2, Name = "Default", StoreId = 2},
+                    new StoreSpace() { Id = 3, Name = "Default", StoreId = 3},
+                    new StoreSpace() { Id = 4, Name = "Default", StoreId = 4},
                 });
         });
 
@@ -63,7 +63,7 @@ public class AppDbContext : DbContext
             entity.HasOne(x => x.Space)
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.StoreSpaceId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.SetNull);
 
 
             entity.HasData(

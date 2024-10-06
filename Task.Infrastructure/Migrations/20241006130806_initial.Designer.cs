@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Task.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Task.Infrastructure.Data;
 namespace Task.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241006130806_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace Task.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,28 +50,24 @@ namespace Task.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Count = 0,
                             Name = "Default Product Name 1",
                             StoreSpaceId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Count = 0,
                             Name = "Default Product Name 2",
                             StoreSpaceId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Count = 0,
                             Name = "Default Product Name 3",
                             StoreSpaceId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Count = 0,
                             Name = "Default Product Name 4",
                             StoreSpaceId = 4
                         });
@@ -146,6 +142,9 @@ namespace Task.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,24 +162,28 @@ namespace Task.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            IsDefault = true,
                             Name = "Default",
                             StoreId = 1
                         },
                         new
                         {
                             Id = 2,
+                            IsDefault = true,
                             Name = "Default",
                             StoreId = 2
                         },
                         new
                         {
                             Id = 3,
+                            IsDefault = true,
                             Name = "Default",
                             StoreId = 3
                         },
                         new
                         {
                             Id = 4,
+                            IsDefault = true,
                             Name = "Default",
                             StoreId = 4
                         });

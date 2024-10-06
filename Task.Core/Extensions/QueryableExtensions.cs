@@ -40,8 +40,11 @@ public static class QueryableExtensions
 
         if (!string.IsNullOrEmpty(sortField) && sortOrder != null)
         {
+            var propertyInfo = typeof(T).GetProperty(sortField);
+            if (propertyInfo == null) throw new ValidationException("SortField Not Valid!", 400);
+
             var parameter = Expression.Parameter(typeof(T), "x");
-            var property = Expression.Property(parameter, sortField) ?? throw new ValidationException("SortField Not Valid!", 400);
+            var property = Expression.Property(parameter, sortField);
 
 
             var lambda = Expression.Lambda<Func<T, object>>(

@@ -1,6 +1,8 @@
-﻿namespace Task.Application.StoreServices.Dto;
+﻿using Task.Domain.Entities;
 
-public class StoreDetailsResponseDto
+namespace Task.Application.StoreServices.Dto;
+
+public class StoreResponseDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

@@ -12,8 +12,8 @@ using Task.Infrastructure.Data;
 namespace Task.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241006124427_initial")]
-    partial class initial
+    [Migration("20241006144432_updateProductAndStoreSpaceTables")]
+    partial class updateProductAndStoreSpaceTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace Task.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -50,24 +53,28 @@ namespace Task.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            Count = 0,
                             Name = "Default Product Name 1",
                             StoreSpaceId = 1
                         },
                         new
                         {
                             Id = 2,
+                            Count = 0,
                             Name = "Default Product Name 2",
                             StoreSpaceId = 2
                         },
                         new
                         {
                             Id = 3,
+                            Count = 0,
                             Name = "Default Product Name 3",
                             StoreSpaceId = 3
                         },
                         new
                         {
                             Id = 4,
+                            Count = 0,
                             Name = "Default Product Name 4",
                             StoreSpaceId = 4
                         });
@@ -142,9 +149,6 @@ namespace Task.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -162,28 +166,24 @@ namespace Task.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            IsDefault = true,
                             Name = "Default",
                             StoreId = 1
                         },
                         new
                         {
                             Id = 2,
-                            IsDefault = true,
                             Name = "Default",
                             StoreId = 2
                         },
                         new
                         {
                             Id = 3,
-                            IsDefault = true,
                             Name = "Default",
                             StoreId = 3
                         },
                         new
                         {
                             Id = 4,
-                            IsDefault = true,
                             Name = "Default",
                             StoreId = 4
                         });
@@ -193,7 +193,8 @@ namespace Task.Infrastructure.Migrations
                 {
                     b.HasOne("Task.Domain.Entities.StoreSpace", "Space")
                         .WithMany("Products")
-                        .HasForeignKey("StoreSpaceId");
+                        .HasForeignKey("StoreSpaceId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Space");
                 });
@@ -202,7 +203,8 @@ namespace Task.Infrastructure.Migrations
                 {
                     b.HasOne("Task.Domain.Entities.Store", "Store")
                         .WithMany("Spaces")
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Store");
                 });

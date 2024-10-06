@@ -18,7 +18,7 @@ public class ExceptionMiddleware : IExceptionHandler
         var exceptionDetail = new ErrorClass(
             "Error",
             exception.Message,
-            100);
+            500);
 
         var errorDetail = Result<object>.IsFailure(exceptionDetail);
 

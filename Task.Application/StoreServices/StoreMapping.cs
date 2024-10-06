@@ -8,10 +8,22 @@ public class StoreMapping : Profile
 {
     public StoreMapping()
     {
-        CreateMap<Store, StoreDetailsResponseDto>().ReverseMap();
+        CreateMap<Store, StoreResponseDto>().ReverseMap();
+        CreateMap<Store, StoreDetailsResponseDto>()
+            .ForMember(x => x.Spaces, opt => opt.MapFrom(src => src.Spaces))
+            .ReverseMap();
+
         CreateMap<AddStoreCommandDto, Store>()
-            .ForMember(x => x.Spaces, opt => opt.MapFrom(src => new List<StoreSpace>() { new StoreSpace() { IsDefault = true, Name = "Default Space"} }));
+            .ForMember(x => x.Spaces, opt => opt.MapFrom(src => new List<StoreSpace>() { new StoreSpace() { Name = "Default Space"} }));
 
         CreateMap<EditStoreCommandDto, Store>();
+
+
+        CreateMap<StoreSpace, StoreSpaceResponseDto>().ReverseMap();
+        CreateMap<StoreSpace, StoreSpaceDetailsResponseDto>()
+            .ForMember(x => x.Store, opt => opt.MapFrom(src => src.Store))
+            .ReverseMap();
+
+        CreateMap<Product, ProductResponseDto>().ReverseMap();
     }
 }
